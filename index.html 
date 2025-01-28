@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skylar Project</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4003766077160515"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Aurora Animation -->
+    <div id="aurora"></div>
+
+    <header>
+        <h1>Skylar Project</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#add-blog">Tambah Blog</a></li>
+                <li><a href="#blog-list">Blog Saya</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <h2>Selamat datang di Skylar Project</h2>
+            <p>Ini adalah tempat di mana kamu bisa menulis dan berbagi blog dengan mudah.</p>
+        </section>
+
+        <section id="add-blog">
+            <h2>Tambah Blog</h2>
+            <div id="editor" contenteditable="true" style="border: 1px solid #ccc; padding: 10px; min-height: 200px; margin-bottom: 10px;"></div>
+            <input type="file" id="image-upload" onchange="previewImage(event)" />
+            <button onclick="publishBlog()">Publikasikan Blog</button>
+            <div>
+                <button onclick="formatText('bold')">Tebal</button>
+                <button onclick="formatText('italic')">Miring</button>
+                <button onclick="formatText('underline')">Garis Bawah</button>
+            </div>
+        </section>
+
+        <section id="blog-list">
+            <h2>Blog Saya</h2>
+            <div id="blog-list-content">
+                <!-- Blog akan muncul di sini -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Google AdSense Ad Slot -->
+    <div style="text-align:center; margin-top: 20px;">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-4003766077160515"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"></ins>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Menambahkan efek scroll halus ketika mengklik link di menu
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Menambahkan animasi aurora
+        const aurora = document.getElementById('aurora');
+        aurora.style.position = 'absolute';
+        aurora.style.top = '0';
+        aurora.style.left = '0';
+        aurora.style.width = '100%';
+        aurora.style.height = '100px';
+        aurora.style.background = 'linear-gradient(45deg, rgba(255, 0, 255, 0.6), rgba(0, 255, 255, 0.6))';
+        aurora.style.animation = 'auroraAnimation 5s infinite alternate';
+
+        // Fungsi untuk format teks di editor
+        function formatText(command) {
+            document.execCommand(command, false, null);
+        }
+
+        // Fungsi untuk publikasi blog
+        function publishBlog() {
+            const blogContent = document.getElementById('editor').innerHTML;
+            const image = document.getElementById('image-preview');
+            if (blogContent.trim() !== "") {
+                const blogList = document.getElementById('blog-list-content');
+                const blogItem = document.createElement('div');
+                blogItem.classList.add('blog-item');
+                blogItem.innerHTML = `<h3>Blog Baru</h3><p>${blogContent}</p><img src="${image ? image.src : ''}" alt="Blog Image" style="max-width: 100%;">`;
+                blogList.appendChild(blogItem);
+                document.getElementById('editor').innerHTML = ''; // Reset editor
+                document.getElementById('image-preview').src = ''; // Reset image preview
+            } else {
+                alert("Pengaruh Media Sosial di Era Digital");
+            }
+        }
+
+        // Fungsi untuk preview gambar sebelum dipublikasikan
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.createElement('img');
+                output.src = reader.result;
+                output.id = 'image-preview';
+                document.body.appendChild(output);
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>
